@@ -1,0 +1,44 @@
+find . -name "*.jar" | xargs rm
+
+python3 /usr/share/java-utils/pom_editor.py pom_disable_module integration
+python3 /usr/share/java-utils/pom_editor.py pom_disable_module osgi-over-slf4j
+python3 /usr/share/java-utils/pom_editor.py pom_disable_module slf4j-android
+python3 /usr/share/java-utils/pom_editor.py pom_disable_module slf4j-migrator
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin :maven-source-plugin
+
+# Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
+python3 /usr/share/java-utils/pom_editor.py pom_xpath_inject "pom:project/pom:properties" "
+
+      <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>"
+
+# Fix javadoc links
+python3 /usr/share/java-utils/pom_editor.py pom_xpath_remove "pom:links"
+
+python3 /usr/share/java-utils/pom_editor.py pom_xpath_inject "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration" "
+
+     <detectJavaApiLink>false</detectJavaApiLink>
+     <isOffline>false</isOffline>
+     <links><link>/usr/share/javadoc/java</link></links>"
+
+# dos2unix
+find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
+    xargs -t /usr/bin/perl -pi -e 's/\r$//g'
+
+# Remove wagon-ssh build extension
+python3 /usr/share/java-utils/pom_editor.py pom_xpath_remove   pom:extensions
+
+
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+python3 /usr/share/java-utils/pom_editor.py pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+
+    <execution>
+      <id>default-jar</id>
+      <phase>skip</phase>
+    </execution>" slf4j-api
+
+python3 /usr/share/java-utils/mvn_package.py :slf4j-parent __noinstall
+python3 /usr/share/java-utils/mvn_package.py :slf4j-site __noinstall
+python3 /usr/share/java-utils/mvn_package.py :slf4j-api
+python3 /usr/share/java-utils/mvn_package.py :slf4j-simple
+python3 /usr/share/java-utils/mvn_package.py :slf4j-nop

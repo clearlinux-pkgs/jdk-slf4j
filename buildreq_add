@@ -1,0 +1,35 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+apache-ant
+apache-maven2
+jdk-bsh
+jdk-build-helper-maven-plugin
+jdk-cal10n
+jdk-commons-compress
+jdk-doxia
+jdk-doxia-sitetools
+jdk-javassist
+jdk-log4j
+jdk-log4j1.2
+jdk-maven-antrun-plugin
+jdk-maven-archiver
+jdk-maven-common-artifact-filters
+jdk-maven-compiler-plugin
+jdk-maven-filtering
+jdk-maven-invoker
+jdk-maven-jar-plugin
+jdk-maven-javadoc-plugin
+jdk-maven-plugin-tools
+jdk-maven-reporting-api
+jdk-maven-resources-plugin
+jdk-maven-shared-incremental
+jdk-maven-shared-utils
+jdk-plexus-archiver
+jdk-plexus-build-api
+jdk-plexus-compiler
+jdk-plexus-interactivity
+jdk-plexus-io
+jdk-snappy-java
+jdk-surefire
+jdk-tools
+jdk-xbean
