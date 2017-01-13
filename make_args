@@ -1,1 +1,1 @@
--f -s
+-f -s; python3 /usr/share/java-utils/mvn_file.py ':slf4j-{*}' slf4j/slf4j-@1 slf4j/@1

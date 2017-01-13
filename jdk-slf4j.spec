@@ -4,7 +4,7 @@
 #
 Name     : jdk-slf4j
 Version  : 1.7.21
-Release  : 1
+Release  : 2
 URL      : http://www.slf4j.org/dist/slf4j-1.7.21.tar.gz
 Source0  : http://www.slf4j.org/dist/slf4j-1.7.21.tar.gz
 Summary  : No detailed summary available
@@ -70,12 +70,14 @@ BuildRequires : jdk-plexus-utils
 BuildRequires : jdk-plexus-velocity
 BuildRequires : jdk-sisu
 BuildRequires : jdk-slf4j
+BuildRequires : jdk-snappy
 BuildRequires : jdk-snappy-java
 BuildRequires : jdk-surefire
 BuildRequires : jdk-velocity
 BuildRequires : jdk-wagon
 BuildRequires : jdk-xbean
 BuildRequires : jdk-xmlunit
+BuildRequires : jdk-xz
 BuildRequires : lxml
 BuildRequires : openjdk-dev
 BuildRequires : python3
@@ -128,7 +130,7 @@ python3 /usr/share/java-utils/mvn_package.py :slf4j-simple
 python3 /usr/share/java-utils/mvn_package.py :slf4j-nop
 
 %build
-python3 /usr/share/java-utils/mvn_build.py -f -s
+python3 /usr/share/java-utils/mvn_build.py -f -s; python3 /usr/share/java-utils/mvn_file.py ':slf4j-{*}' slf4j/slf4j-@1 slf4j/@1
 
 %install
 xmvn-install  -R .xmvn-reactor -n slf4j -d %{buildroot}
@@ -138,9 +140,16 @@ xmvn-install  -R .xmvn-reactor -n slf4j -d %{buildroot}
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/java/slf4j/api.jar
+/usr/share/java/slf4j/ext.jar
 /usr/share/java/slf4j/jcl-over-slf4j.jar
+/usr/share/java/slf4j/jcl.jar
+/usr/share/java/slf4j/jdk14.jar
 /usr/share/java/slf4j/jul-to-slf4j.jar
 /usr/share/java/slf4j/log4j-over-slf4j.jar
+/usr/share/java/slf4j/log4j12.jar
+/usr/share/java/slf4j/nop.jar
+/usr/share/java/slf4j/simple.jar
 /usr/share/java/slf4j/slf4j-api.jar
 /usr/share/java/slf4j/slf4j-ext.jar
 /usr/share/java/slf4j/slf4j-jcl.jar
@@ -156,9 +165,16 @@ xmvn-install  -R .xmvn-reactor -n slf4j -d %{buildroot}
 /usr/share/maven-metadata/slf4j-slf4j-jdk14.xml
 /usr/share/maven-metadata/slf4j-slf4j-log4j12.xml
 /usr/share/maven-metadata/slf4j.xml
+/usr/share/maven-poms/slf4j/api.pom
+/usr/share/maven-poms/slf4j/ext.pom
 /usr/share/maven-poms/slf4j/jcl-over-slf4j.pom
+/usr/share/maven-poms/slf4j/jcl.pom
+/usr/share/maven-poms/slf4j/jdk14.pom
 /usr/share/maven-poms/slf4j/jul-to-slf4j.pom
 /usr/share/maven-poms/slf4j/log4j-over-slf4j.pom
+/usr/share/maven-poms/slf4j/log4j12.pom
+/usr/share/maven-poms/slf4j/nop.pom
+/usr/share/maven-poms/slf4j/simple.pom
 /usr/share/maven-poms/slf4j/slf4j-api.pom
 /usr/share/maven-poms/slf4j/slf4j-ext.pom
 /usr/share/maven-poms/slf4j/slf4j-jcl.pom
